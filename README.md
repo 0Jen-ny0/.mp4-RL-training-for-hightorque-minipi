@@ -1,9 +1,13 @@
-# Reinforcement training for hightorque minipi via video input
+# Reinforcement training for hightorque minipi via video input (.mp4)
 ## Overview
-This repository adapts the GVHMR + GMR + BeyondMimic framework for half-body humanoid robotics. The page uses hightorque_minipi as robot model but can be adapted to other half robots. Any changes made to the original code will be documented as reference for other half body robots.
+This repository adapts the GVHMR + GMR + BeyondMimic framework for half-body humanoid robotics. The frameworks takes an
+
+This repository uses hightorque_minipi as robot model but can be adapted to other half robots. Any changes made to the original code will be documented as reference in the ['Changes & Notes'](#changes--notes) section for other half body robots.
 
 ## GVHMR
-Please refer to the [GVHMR](https://github.com/zju3dv/GVHMR) repository for environment setup and usage
+
+Please refer to the [GVHMR](https://github.com/zju3dv/GVHMR) repository for environment setup and usage. 
+No changes were made to the original code.
 
 An example can be downloaded [here]() and imported into `GVHMR/outputs/demo/{exercise}` folder
 
@@ -18,6 +22,11 @@ ffplay outputs/demo/{exercise}/{exercise}_3_incam_global_horiz.mp4
 
 The output will give you a hmr4d file a video like this.
 
+<p align="center">
+  <img src="assets/demo/gvhmer_demo.gif" width="420">
+</p>
+
+Full demo video: [watch here](https://github.com/user-attachments/assets/7cd875c9-f437-4607-ad3a-5d7dcecb2965)
 
 
 
@@ -26,6 +35,8 @@ The output will give you a hmr4d file a video like this.
 
 ## BeyondMimic
 [BeyondMimic](https://github.com/HybridRobotics/whole_body_tracking)
+
+## Changes
 
 
 ## Third-party projects (credits)
