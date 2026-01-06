@@ -28,7 +28,7 @@ ffplay outputs/demo/{exercise}/{exercise}_3_incam_global_horiz.mp4
 The output will be in the `GVHMR/outputs/demo/{exercise}` folder, including a hmr4d file and video shown below.
 
 <p align="center">
-  <img src="exercise/_demo.gif" width="420">
+  <img src="exercise/demo.gif" width="420">
 </p>
 
 Full demo video: [watch here](https://github.com/user-attachments/assets/7cd875c9-f437-4607-ad3a-5d7dcecb2965)
