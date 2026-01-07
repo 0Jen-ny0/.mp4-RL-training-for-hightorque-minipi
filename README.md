@@ -81,7 +81,7 @@ python scripts/gvhmr_to_robot.py
 --save_path outputs/demo/{exercise}.csv
 ```
 
-The output `.csv` will be saved to `GMR/outputs/demo`.
+The output `.csv` will be saved to `GMR/outputs/demo` and video saved to `GMR/videos`.
 
 
 ## BeyondMimic
