@@ -38,6 +38,7 @@ Full demo video: [watch here](https://github.com/user-attachments/assets/7cd875c
 ## GMR
 [GMR](https://github.com/YanjieZe/GMR)
 
+
 Download [SMPL-X body](https://github.com/vchoutas/smplx) models to `GMR/assets/body_models` from SMPL-X and then structure as follows:
 ```bash
 - GMR/assets/body_models/smplx/
@@ -52,6 +53,11 @@ cd RL-minipi/GMR
 
 ```
 
+takes input from GVHMR folder
+```bash
+
+
+```
 
 
 ## BeyondMimic
@@ -70,9 +76,24 @@ cd RL-minipi/whole_body_tracking
 No changes were made to the original repository.
 
 ### GMR
+
+1. Import robot's urdf + meshes (.stl) files into `GMR/assets` folder.
+   - The urdf file has to include a floating point in GMR:
+  ```bash
+	<link name="world_link"/>
+
+		<joint name="root_joint" type="floating">
+		  <parent link="world_link"/>
+		  <child link="base_link"/>
+		  <origin xyz="0 0 0" rpy="0 0 0"/>
+		</joint>
+  ```
+2. 
+
+
 refer to the robot's urdf file for joint names and order 
 
-GMR processes using rot (w-x-y-z) 
+GMR processes using rotation order (w-x-y-z) 
 
 #### Changes
 ### BeyondMimic
