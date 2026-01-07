@@ -1,0 +1,36 @@
+{
+  "robot_root_name": "base_link",
+  "human_root_name": "pelvis",
+  "ground_height": 0.0,
+  "human_height_assumption": 1.8,
+
+  "use_ik_match_table1": true,
+  "use_ik_match_table2": false,
+
+    "human_scale_table": {
+    "pelvis": 0.34,
+    "left_hip": 0.7,
+    "right_hip": 0.7,
+    "left_knee": 0.37,
+    "right_knee": 0.37,
+    "left_foot": 0.34,
+    "right_foot": 0.34
+    },
+
+
+    "ik_match_table1": {
+
+    "base_link": ["pelvis", 100, 10, [0,0,0], [0.5,-0.5,-0.5,-0.5]],
+
+    "l_hip_roll_link":   ["left_hip",   0, 10, [0,0,0], [0.5,-0.5,-0.5,-0.5]],
+    "r_hip_roll_link":   ["right_hip",  0, 10, [0,0,0], [0.5,-0.5,-0.5,-0.5]],
+
+    "l_calf_link":       ["left_knee",  0, 10, [0,0,0], [0.5,-0.5,-0.5,-0.5]],
+    "r_calf_link":       ["right_knee", 0, 10, [0,0,0], [0.5,-0.5,-0.5,-0.5]],
+
+    "l_ankle_pitch_link": ["left_foot", 100, 10, [0,0,-0.045], [0.5,-0.5,-0.5,-0.5]],
+    "r_ankle_pitch_link": ["right_foot",100, 10, [0,0,-0.045], [0.5,-0.5,-0.5,-0.5]]
+    },
+
+  "ik_match_table2": {}
+}
