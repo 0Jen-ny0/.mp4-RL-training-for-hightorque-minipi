@@ -9,9 +9,10 @@ The frameworks takes an input video of human motion and:
 
 This repository uses [hightorque_minipi](https://www.hightorquerobotics.com/pi/#) as robot model but can be adapted to other half robots. Any changes made to the original code will be documented as reference in the ['Changes & Notes'](#changes--notes) section to support other half body robots.
 
-## Import repository
-how to import code...
-
+To import repository:
+```bash
+git clone https://github.com/0Jen-ny0/RL-minipi.git
+```
 ---
 ## GVHMR
 
@@ -123,8 +124,9 @@ No changes were made to the original repository.
 		</joint>
   ```
 
-2. Create `smplx_to_hightorque_minipi.json` in `general_motion_retargeting/ik_configs`
+2. Create `smplx_to_{robot_model}.json` in `general_motion_retargeting/ik_configs`
 ```bash
+# Example format
 "base_link": ["pelvis", 100, 10, [0,0,0], [0.5,-0.5,-0.5,-0.5]]
 "robot_frame_name": ["human_body_name", pos_weight, rot_weight, pos_offset, rot_offset_quat]
 ```
@@ -148,10 +150,43 @@ csv file context
 # refer to the robot's urdf file for joint names and order 
   ```
 
-
-#### Changes
 ### BeyondMimic
+1.Import robot's urdf file into `source/whole_body_tracking/whole_body_tracking/assets`.
 
+Remove the floating point in the urdf:
+```bash
+# Remove something like this
+	<link name="world_link"/>
+		<joint name="root_joint" type="floating">
+		  <parent link="world_link"/>
+		  <child link="base_link"/>
+		  <origin xyz="0 0 0" rpy="0 0 0"/>
+		</joint>
+```
+
+2.Create `{robot_model}.py` in `source/whole_body_tracking/whole_body_tracking/robots`
+
+```bash
+# Update ARMATURE + velocity according to the robot's specification
+# (J_rotor + J_reducer)* 1e-6 * N^2
+# Replace all variables with robot model name (Ctrl+F:minipi)
+# Update the joint variables
+```
+**3. Edit `my_on_policy_runner` in `source/whole_body_tracking/whole_body_tracking/tasks/tracking/mdp`**
+```bash
+# Update rewards and etc to change policy optimisation
+```
+4.Copy + rename the `minipi` folder to {robot_model} in `source/whole_body_tracking/whole_body_tracking/tasks/tracking/config` and edit `flat_env_cfg.py`
+```bash
+# Replace all variables with robot model name (Ctrl+F:minipi)
+# Update 'self.commands.motion.body_names'
+```
+
+5.Edit `csv_to_npz.py`
+```bash
+# Replace all variables with robot model name (Ctrl+F:minipi)
+# Replace the 'joint_names' (same as gvhmr)
+```
 
 
 ## Third-party projects (credits)
