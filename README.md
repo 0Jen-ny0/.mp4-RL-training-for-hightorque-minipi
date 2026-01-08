@@ -1,13 +1,13 @@
 # Reinforcement training for hightorque minipi via video input (.mp4)
 ## Overview
-This repository adapts the GVHMR → GMR → BeyondMimic pipeline for half-body humanoid robotics. It should be noted that due to the half-body nature of robot, certain motions that require upper body to balance may be difficult to reproduce.
+This repository adapts the GVHMR → GMR → BeyondMimic pipeline for a half-body humanoid robot (HighTorque MiniPi). Because MiniPi has a reduced upper-body DoF, motions that rely heavily on upper-body balancing may be difficult to reproduce.
 
-The frameworks takes an input video of human motion and:
+The framework takes an input video of human motion and:
 - [(GVHMR)](https://github.com/zju3dv/GVHMR) reconstructs full-body 3D human motion (pose and global trajectory) from input video.
 - [(GMR)](https://github.com/YanjieZe/GMR) retargets the reconstructed human motion into robot joint motions, producing a trajectory the robot can track.
 - [(BeyondMimic)](https://github.com/HybridRobotics/whole_body_tracking) trains and runs an RL tracking policy so the humanoid robot follows the retargeted motion in simulation.
 
-This repository uses [hightorque_minipi](https://www.hightorquerobotics.com/pi/#) as robot model but can be adapted to other half robots. Any changes made to the original code will be documented as reference in the ['Changes & Notes'](#changes--notes) section to support other half body robots.
+This repository uses [hightorque_minipi](https://www.hightorquerobotics.com/pi/#) as the robot model, but it can be adapted to other reduced-DoF humanoid platforms. All deviations from upstream projects are documented in the ['Changes & Notes'](#changes--notes) section.
 
 To import repository:
 ```bash
@@ -75,11 +75,12 @@ cd RL-minipi/GMR
 
 Run the command below to retarget the extracted human pose data to your robot:
 ```bash
-python scripts/gvhmr_to_robot.py
---robot hightorque_minipi
---gvhmr_pred_file ~RL-minipi/GVHMR/outputs/demo/{exercise}/hmr4d_results.pt
---record_video   --rate_limit
---save_path outputs/demo/{exercise}.csv
+python scripts/gvhmr_to_robot.py \
+  --robot hightorque_minipi \
+  --gvhmr_pred_file ~/RL-minipi/GVHMR/outputs/demo/{exercise}/hmr4d_results.pt \
+  --record_video \
+  --rate_limit \
+  --save_path outputs/demo/{exercise}.csv
 ```
 
 The output `.csv` will be saved to `GMR/outputs/demo` and video saved to `GMR/videos`.
@@ -87,7 +88,7 @@ The output `.csv` will be saved to `GMR/outputs/demo` and video saved to `GMR/vi
 
 ## BeyondMimic
 > [!NOTE]
-> The code is tested on Ubuntu 22.04, using IsaacSim 5.1 and IsaacLab V2.1.0
+> Tested on Ubuntu 22.04 with Isaac Sim 5.1 and Isaac Lab v2.1.0.
 
 ### Installation
 > This repository is based on [BeyondMimic](https://github.com/HybridRobotics/whole_body_tracking) and includes modifications to support the `hightorque_minipi` model.
@@ -114,8 +115,7 @@ conda activate {environment}
 python -m pip install -e source/whole_body_tracking
 ```
 
-
-Log in to your [WandB](https://wandb.ai/home) account; access Registry under Core on the left. Create a new registry collection with the name "Motions" and artifact type "All Types".
+In [Weights & Biases](https://wandb.ai/home), open Registry and create a new collection named Motions (artifact type: All Types).
 
 Convert csv into npz and upload into WandB:
 ```bash
@@ -131,12 +131,13 @@ python scripts/replay_npz.py --registry_name={your-organization}--org/wandb-regi
 #### Policy training
 Train policy by the following command:
 ```bash
-python scripts/rsl_rl/train.py
---task=Tracking-Flat-MiniPi-v0
---registry_name=jennyjlq2004-university-college-london-ucl--org/wandb-registry-motions/{exercise}:latest
---headless   --logger=wandb
---log_project_name=whole-body-tracking
---run_name={exercise}
+python scripts/rsl_rl/train.py \
+  --task=Tracking-Flat-MiniPi-v0 \
+  --registry_name={your-organization}--org/wandb-registry-motions/{exercise}:latest \
+  --headless \
+  --logger=wandb \
+  --log_project_name=whole-body-tracking \
+  --run_name={exercise}
 ```
 Play the trained policy by the following command:
 ```bash
@@ -151,7 +152,7 @@ No changes were made to the original repository.
 ### GMR
 
 1. Import robot's urdf + meshes (.stl) files into `GMR/assets` folder.
-   - The urdf file has to include a floating point in GMR:
+   - The urdf file must include a floating root joint in GMR:
   ```bash
 	<link name="world_link"/>
 
@@ -169,7 +170,7 @@ No changes were made to the original repository.
 "robot_frame_name": ["human_body_name", pos_weight, rot_weight, pos_offset, rot_offset_quat]
 ```
 
-3. Edit `general_motion_retargeting/param.py`
+3. Edit `general_motion_retargeting/params.py`
    
 ```bash
 Add the name of the robot model where # Add robot model
@@ -191,7 +192,7 @@ csv file context
 ### BeyondMimic
 1.Import robot's urdf file into `source/whole_body_tracking/whole_body_tracking/assets`.
 
-Remove the floating point in the urdf:
+Remove the floating joint in the urdf:
 ```bash
 # Remove something like this
 	<link name="world_link"/>
@@ -206,11 +207,11 @@ Remove the floating point in the urdf:
 
 ```bash
 # Update ARMATURE + velocity according to the robot's specification
-# Armature = (J_rotor + J_reducer)* 1e-6 * N^2
+# Armature = (J_rotor + J_reducer)* 1e-6 * N^2 , N = gear ratio
 # Replace all variables with robot model name (Ctrl+F:minipi)
 # Update the joint variables
 ```
-**3. Edit `my_on_policy_runner` in `source/whole_body_tracking/whole_body_tracking/tasks/tracking/mdp`**
+**3. Edit `my_on_policy_runner` in `source/whole_body_tracking/whole_body_tracking/tasks/tracking/mdp` to adjust reward terms, logging, and export behavior.**
 ```bash
 # Update rewards and etc to change policy optimisation
 ```
