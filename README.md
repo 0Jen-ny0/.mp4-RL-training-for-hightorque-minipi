@@ -132,7 +132,7 @@ python scripts/replay_npz.py --registry_name={your-organization}--org/wandb-regi
 Train policy by the following command:
 ```bash
 python scripts/rsl_rl/train.py \
-  --task=Tracking-Flat-MiniPi-v0 \
+  --task=Tracking-Flat-{MiniPi}-v0 \
   --registry_name={your-organization}--org/wandb-registry-motions/{exercise}:latest \
   --headless \
   --logger=wandb \
@@ -141,7 +141,12 @@ python scripts/rsl_rl/train.py \
 ```
 Play the trained policy by the following command:
 ```bash
-
+python scripts/rsl_rl/play.py \
+  --task=Tracking-Flat-{MiniPi}-v0 \
+  --num_envs=2 \
+  --wandb_path={wandb-run-path} \
+  --video \
+  --video_length={desired_length}
 ```
 
 ---
