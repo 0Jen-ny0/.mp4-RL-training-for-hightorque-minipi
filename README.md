@@ -11,7 +11,7 @@ This repository uses [hightorque_minipi](https://www.hightorquerobotics.com/pi/#
 
 | Sideway walk | Stomping |
 |---|---|
-| <img src="exercise/demo/gifs/sideway_walk.gif" width="450"> | <img src="exercise/demo/gifs/stomping.gif" width="450"> |
+| <img src="exercise/demo/gifs/sideway_walk.gif" width="400"> | <img src="exercise/demo/gifs/stomping.gif" width="400"> |
 
 To import repository:
 ```bash
@@ -44,7 +44,7 @@ Outputs are saved under `GVHMR/outputs/demo/{exercise}`, including the hmr4d fil
 
 | Exercise | Squat | Feet up |
 |---|---|---|
-| <img src="exercise/demo/gifs/exercise.gif" width="300"> | <img src="exercise/demo/gifs/squat.gif" width="300"> | <img src="exercise/demo/gifs/feetup.gif" width="300"> |
+| <img src="exercise/demo/gifs/exercise.gif" width="250"> | <img src="exercise/demo/gifs/squat.gif" width="250"> | <img src="exercise/demo/gifs/feetup.gif" width="250"> |
 
 Full demo video: [watch here](https://github.com/user-attachments/assets/7cd875c9-f437-4607-ad3a-5d7dcecb2965)
 
@@ -91,7 +91,7 @@ The output `.csv` will be saved to `GMR/outputs/demo` and video saved to `GMR/vi
 
 | Squat | Feet up|
 |---|---|
-| <img src="exercise/demo/gifs/squat_gmr.gif" width="450"> | <img src="exercise/demo/gifs/feetup_gmr.gif" width="450"> |
+| <img src="exercise/demo/gifs/squat_gmr.gif" width="400"> | <img src="exercise/demo/gifs/feetup_gmr.gif" width="400"> |
 
 
 ## BeyondMimic
